@@ -1,30 +1,26 @@
 import React, { useState } from 'react';
-import { StyleSheet, Text, View, Button, TextInput } from 'react-native';
+import { StyleSheet, Text, View, ScrollView } from 'react-native';
 
 export default function App() {
-  const [name, setName] = useState('trung');
-  const [age, setAge] = useState(15);
+  const [persion, setPersion] = useState([
+    { name: 'trung', key: 1 },
+    { name: 'trung', key: 2 },
+    { name: 'trung', key: 3 },
+    { name: 'trung', key: 4 },
+    { name: 'trung', key: 5 },
+    { name: 'trung', key: 6 },
+    { name: 'trung', key: 7 },
+  ]);
 
   return (
     <View style={styles.container}>
-      <Text>Enter name</Text>
-      <TextInput
-        multiline
-        style={styles.input}
-        placeholder="etc abc xyz"
-        value={name}
-        onChangeText={val => setName(val)}
-      />
-
-      <Text>Enter age</Text>
-      <TextInput
-        keyboardType='numeric'
-        style={styles.input}
-        placeholder="etc abc xyz"
-        value={age}
-        onChangeText={val => setAge(val)}
-      />
-      <Text style={styles.boldText} >Name: {name} age: {age}</Text>
+      <ScrollView>
+        {persion.map(item => (
+          <View key={item.key} >
+            <Text style={styles.text} >{item.name}</Text>
+          </View>
+        ))}
+      </ScrollView>
     </View>
   );
 }
@@ -33,18 +29,16 @@ const styles = StyleSheet.create({
   container: {
     flex: 1,
     backgroundColor: '#fff',
-    alignItems: 'center',
-    justifyContent: 'center',
+    paddingVertical: 20,
+    paddingHorizontal: 20,
+    // alignItems: 'center',
+    // justifyContent: 'center',
   },
-  boldText: {
+  text: {
+    fontSize: 20,
     fontWeight: 'bold',
-  },
-  input: {
-    margin: 8,
-    padding: 8,
-    borderColor: '#777',
-    color: 'tomato',
-    borderWidth: 2,
-    width: 250,
+    marginVertical: 40,
+    padding: 60,
+    backgroundColor: 'pink'
   }
 });
