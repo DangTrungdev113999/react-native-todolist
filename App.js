@@ -1,36 +1,28 @@
 import React, { useState } from 'react';
-import { StyleSheet, Text, View, FlatList, TouchableOpacity } from 'react-native';
+import { StyleSheet, Text, View, FlatList } from 'react-native';
+import Header from './src/components/Header';
 
 export default function App() {
-  const [persion, setPersion] = useState([
-    { name: 'trung', id: "1" },
-    { name: 'trung', id: '2' },
-    { name: 'trung', id: '3' },
-    { name: 'trung', id: '4' },
-    { name: 'trung', id: '5' },
-    { name: 'trung', id: '6' },
-    { name: 'trung', id: '7' },
-  ]);
-
-  const onPressHandler = id => {
-    setPersion(prevPersion => {
-      return prevPersion.filter(persion => persion.id !== id);
-    })
-  }
+  const [todos, setTodos] = useState([
+    {text: 'Do home work', key: '1'},
+    {text: 'Learning reactjs', key: '2'},
+    {text: 'easy  leaning react-native ', key: '3'}
+  ])
 
   return (
     <View style={styles.container}>
+      <Header/>
+    <View style={styles.content} >
+      {/* to form */}
+    <View style={styles.list}>
       <FlatList
-        data={persion}
-        keyExtractor={item => item.id}
-        horizontal={false}
-        renderItem={({ item }) => (
-          <TouchableOpacity onPress={() => onPressHandler(item.id)} >
-            <Text style={styles.item}>{item.name}</Text>
-          </TouchableOpacity>
+        data={todos}
+        renderItem={({item}) => (
+          <Text>{item.text}</Text>
         )}
-        numColumns={2}
       />
+      </View>
+      </View>
     </View>
   );
 }
@@ -39,17 +31,11 @@ const styles = StyleSheet.create({
   container: {
     flex: 1,
     backgroundColor: '#fff',
-    paddingVertical: 20,
-    paddingHorizontal: 20,
-    alignItems: 'center',
-    justifyContent: 'center',
   },
-  item: {
-    fontSize: 20,
-    fontWeight: 'bold',
-    marginVertical: 40,
-    marginHorizontal: 10,
-    padding: 30,
-    backgroundColor: 'pink'
+  content: {
+    padding: 40,
+  },
+  list: {
+    marginTop: 20,
   }
 });
