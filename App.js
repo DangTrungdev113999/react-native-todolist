@@ -1,5 +1,5 @@
 import React, { useState } from 'react';
-import { StyleSheet, Text, View, FlatList } from 'react-native';
+import { StyleSheet, Text, View, FlatList, TouchableOpacity } from 'react-native';
 
 export default function App() {
   const [persion, setPersion] = useState([
@@ -12,14 +12,22 @@ export default function App() {
     { name: 'trung', id: '7' },
   ]);
 
+  const onPressHandler = id => {
+    setPersion(prevPersion => {
+      return prevPersion.filter(persion => persion.id !== id);
+    })
+  }
+
   return (
     <View style={styles.container}>
       <FlatList
         data={persion}
         keyExtractor={item => item.id}
         horizontal={false}
-        renderItem={({item}) => (
-          <Text style={styles.item}>{item.name}</Text>
+        renderItem={({ item }) => (
+          <TouchableOpacity onPress={() => onPressHandler(item.id)} >
+            <Text style={styles.item}>{item.name}</Text>
+          </TouchableOpacity>
         )}
         numColumns={2}
       />
@@ -33,15 +41,15 @@ const styles = StyleSheet.create({
     backgroundColor: '#fff',
     paddingVertical: 20,
     paddingHorizontal: 20,
-    // alignItems: 'center',
-    // justifyContent: 'center',
+    alignItems: 'center',
+    justifyContent: 'center',
   },
   item: {
     fontSize: 20,
     fontWeight: 'bold',
     marginVertical: 40,
     marginHorizontal: 10,
-    padding: 60,
+    padding: 30,
     backgroundColor: 'pink'
   }
 });
