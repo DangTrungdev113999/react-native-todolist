@@ -1,8 +1,9 @@
 import React, { useState } from 'react';
-import { StyleSheet, Text, View, FlatList, Alert } from 'react-native';
+import { StyleSheet, Text, View, FlatList, Alert, TouchableWithoutFeedback, Keyboard } from 'react-native';
 import Header from './src/components/Header';
 import TodoListItem from './src/components/TodoListItem';
 import AddTodo from './src/components/AddTodo';
+import Sanbox from './src/components/Sanbox';
 
 export default function App() {
   const [todos, setTodos] = useState([
@@ -18,7 +19,7 @@ export default function App() {
   }
 
   const onAddItem = text => {
-    if (text.length < 3) {
+    if (text.length <= 3) {
       Alert.alert('OPPS!', 'Todo must be over 3 chars long', [
         {
           text: 'Understood',
@@ -36,21 +37,25 @@ export default function App() {
   }
 
   return (
-    <View style={styles.container}>
-      <Header />
-      <View style={styles.content} >
-        {/* to form */}
-        <View style={styles.list}>
+    <TouchableWithoutFeedback onPress={() => {
+      Keyboard.dismiss();
+      console.log('dismissed keyboard');
+    }}>
+      <View style={styles.container}>
+        <Header />
+        <View style={styles.content} >
           <AddTodo onAddItem={onAddItem} />
-          <FlatList
-            data={todos}
-            renderItem={({ item }) => (
-              <TodoListItem item={item} onDeleteItem={onDeleteItem} />
-            )}
-          />
+          <View style={styles.list}>
+            <FlatList
+              data={todos}
+              renderItem={({ item }) => (
+                <TodoListItem item={item} onDeleteItem={onDeleteItem} />
+              )}
+            />
+          </View>
         </View>
       </View>
-    </View>
+    </TouchableWithoutFeedback>
   );
 }
 
@@ -60,9 +65,11 @@ const styles = StyleSheet.create({
     backgroundColor: '#fff',
   },
   content: {
+    flex: 1,
     padding: 40,
   },
   list: {
+    flex: 1,
     marginTop: 20,
   }
 });
