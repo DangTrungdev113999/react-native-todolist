@@ -1,5 +1,5 @@
 import React, { useState } from 'react';
-import { StyleSheet, Text, View, FlatList } from 'react-native';
+import { StyleSheet, Text, View, FlatList, Alert } from 'react-native';
 import Header from './src/components/Header';
 import TodoListItem from './src/components/TodoListItem';
 import AddTodo from './src/components/AddTodo';
@@ -18,11 +18,21 @@ export default function App() {
   }
 
   const onAddItem = text => {
-    setTodos(prevTodos => {
-      return [
-        { text }, ...prevTodos,
-      ]
-    })
+    if (text.length < 3) {
+      Alert.alert('OPPS!', 'Todo must be over 3 chars long', [
+        {
+          text: 'Understood',
+          onPress: () => console.log('alert closed'),
+        }
+      ])
+    } else {
+      setTodos(prevTodos => {
+        return [
+          { text }, ...prevTodos,
+        ]
+      })
+    }
+
   }
 
   return (
@@ -31,7 +41,7 @@ export default function App() {
       <View style={styles.content} >
         {/* to form */}
         <View style={styles.list}>
-          <AddTodo onAddItem={onAddItem}  />
+          <AddTodo onAddItem={onAddItem} />
           <FlatList
             data={todos}
             renderItem={({ item }) => (
